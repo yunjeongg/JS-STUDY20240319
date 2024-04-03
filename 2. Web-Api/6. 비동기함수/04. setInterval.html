@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <p class="msg"></p>
+  <p id="clock"></p>
+  <script>
+    //셋타임아웃은 대기시간 후 반복
+    // 간격을 두고 계속 반복
+    //셋인터벌 - 비동기함수 (다른함수에 영향주지 않고 지혼자 실행)
+    //셋인터벌이 도는 와중 밑에코드 이어서 계속 실행됨
+    //보통 시계에 많이 사용
+    const $msg = document.querySelector('.msg');
+
+    // setInterval(() => {
+    //   $msg.textContent += '안뇽~~\n';
+    // }, 500);
+
+    const $clock = document.getElementById('clock');
+
+    // 현재 시간 가져오기
+    // console.log(now.toLocaleTimeString());
+    
+    setInterval(() => {
+      const now = new Date();
+      $clock.textContent = now.toLocaleTimeString();
+    }, 1000);
+
+  </script>
+
+</body>
+
+</html>
