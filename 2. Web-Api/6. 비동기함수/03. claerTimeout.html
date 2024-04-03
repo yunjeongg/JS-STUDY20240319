@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <button id="start">시작</button>
+  <button id="cancel">취소</button>
+  <p class="msg"></p>
+
+  <script>
+    //setTimeout만 하면 연타친 것이 대기열로 쌓여 대기시간 이후 계속해서 실행되게된다
+    //성능을 위해 대기시간동안 연타친 것을 취소시켜줘야 한다.
+    //
+    const $start = document.getElementById('start');
+    const $cancel = document.getElementById('cancel');
+    const $msg = document.querySelector('.msg');
+
+    // 타이머를 변수에 저장할 수 있다
+    let timer = null;
+
+
+    $start.addEventListener('click', e=> {
+
+      if (timer) {//기존 타이머 대기열이 존재한다면
+        clearTimeout(timer)} //대기열 취소시킨다. 
+
+        //메세지초기화
+        $msg.textContent = '';
+      timer = setTimeout (()=> {
+        $msg.textContent += '안녕하긔?'
+        timer = null; //타이머 실행 후 초기화
+      }, 2000)
+    })
+
+    $cancel.addEventListener('click', e => { //시작 후 2초안에 취소누르면 안녕하긔 안띄우겠다.
+      if (timer) {
+        clearTimeout(timer); //타이머취소
+        $msg.textContent += '메세지가 취소되었습니다';
+
+        timer = null; //타이머 실행 후 초기화
+      }
+    })
+
+    // 디바운싱: 함수실행요청이 연속적으로 들어온 경우 가장 마지막 요청만 수행함
+    /* https://medium.com/%EC%98%A4%EB%8A%98%EC%9D%98-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D/%EB%94%94%EB%B0%94%EC%9A%B4%EC%8B%B1%EA%B3%BC-%EC%93%B0%EB%A1%9C%ED%8B%80%EB%A7%81-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0-e02f6bb14627*/
+  </script>
+</body>
+</html>
