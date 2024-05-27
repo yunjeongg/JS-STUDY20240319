@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <button id="show">Callback 요청!</button>
+
+  <script>
+
+    function get(url, callback) {
+      const xhr = new XMLHttpRequest();
+      xhr.open('GET', url);
+      xhr.send();
+
+      xhr.onload = e => {
+        const response = JSON.parse(xhr.response);
+        callback(response)
+      };
+    }
+
+    document.getElementById('show').addEventListener('click', e => {
+      // 버튼을 클릭하면 1. 두번째 회원을 조회하여
+      // 해당 회원이 쓴 2. 글의 목록을 조회한 후
+      // 해당 글의 3. 댓글들을 조회한다.
+      const url = 'https://jsonplaceholder.typicode.com';
+
+      // get(`${url}/users`); // 회원정보 조회
+      // get(`${url}/users/${userId}/posts`); // 해당 회원이 쓴 글 목록요청
+      // get(`${url}/posts/${postId}/comments`); // 해당 글의 댓글목록요청
+
+      // 비동기는 동시에 시작하는데, 만일 일정 순서가 있는 비동기에서
+      // 앞 순서의 데이터양이 많아서 처리순서가 뒤바뀔 경우가 있다.
+      // 이 경우 콜백으로 가야한다.
+
+      get(`${url}/users`, (response) => { // (회원정보 조회, (응답데이터(회원정보목록)) => {});
+        const userId = response[1].id; // 해당 회원이 쓴 글 목록요청
+        get(`${url}/users/${userId}/posts`), (response) => {
+          get(`${url}/posts/${postId}/comments`) // 해당 글의 댓글목록요청
+          console.log(response);
+        }
+      });
+
+      // 콜백지옥을 해결하기 위해 나온 것이 Promise이다.
+    });
+  </script>
+
+
+</body>
+</html>
