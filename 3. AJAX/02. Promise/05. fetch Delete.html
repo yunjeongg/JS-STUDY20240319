@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <botton id="remove">삭제!</botton>
+
+  <script>document.getElementById('remove').onclick = e => {
+
+    const rno = 5008;
+    fetch(`http://localhost:8383/api/v1/replies/${rno}`, {
+      method: 'DELETE'
+      // delete는 삭제하는거지 추가할 내용이 있는게 아니기 때문에 headers:, body: 생략
+    })
+      .then(res => res.json())
+      .then(json => {
+        console.log(json);
+      })
+  }</script>
+</body>
+</html>
