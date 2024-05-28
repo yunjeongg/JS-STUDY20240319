@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <button id="show">댓글조회!</button>
+  <script>
+
+    // 기존 Promise 함수
+    function fetchGet() {
+      const result = fetch('http://localhost:8383/api/v1/replies/101');
+      // console.log(result);
+
+      const json = result.then(res => res.json());
+      // console.log(json);
+
+      const data = json.then(data => {
+        console.log('then내부:', data);
+        return '하하호호';
+      });
+      console.log('then외부:', data);
+    }
+
+
+    // async 함수는 기본적으로 Promise를 소비하는 함수이다.
+    async function fetchGet2() {
+
+      // await : then메서드를 대신 호출해서 PromiseResult를 바로 가져온다.
+      const result = await fetch('http://localhost:8383/api/v1/replies/101');
+      // console.log(result);
+
+      const json = await result.json();
+      console.log(json);
+    }
+
+    document.getElementById('show').onclick = e => {
+      // fetchGet();
+
+      fetchGet2();
+    };
+
+    // fetch는 내장
+    // axios는 외부라이브러리 다운받아야 함
+    // https://axios-http.com/docs/intro
+
+  </script>
+
+</body>
+</html>
